@@ -191,19 +191,19 @@ Alert.innerHTML = `<div class="alert alert-danger alert-dismissible fade show " 
    
 }
  else if (USAGE <= 1001) {
-    Alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Awesome Sauce!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our minimum for bill credits you qualify for <b> 35$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p></div> `;
+    Alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Awesome Sauce!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our minimum for bill credits you qualify for <b> $35 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p></div> `;
     document.getElementById('TotalUsage').innerHTML = USAGE;
    document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
 }
 else if ( USAGE <= 1500) {
-    Alert.innerHTML = `<div class="alert alert-primary alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Neato!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is high enough for our bill credits to kick in and take <b> 35$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
+    Alert.innerHTML = `<div class="alert alert-primary alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Neato!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is high enough for our bill credits to kick in and take <b> $35 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
     document.getElementById('TotalUsage').innerHTML = USAGE;
    document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
 }
 else if (USAGE > 1500) {
-    Alert.innerHTML = `<div class="alert alert-success alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Hunky Dory!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our maximum for bill credits you qualify for <b> 50$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
+    Alert.innerHTML = `<div class="alert alert-success alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Hunky Dory!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our maximum for bill credits you qualify for <b> $50 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
     document.getElementById('TotalUsage').innerHTML = USAGE;
    document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
