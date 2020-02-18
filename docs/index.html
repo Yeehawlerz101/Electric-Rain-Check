@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Constellation Calculator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap-412.min.css">
+    
+  </head>
+
+  
+
+
+  <body id="background">
+    <div class="Background-container">
+      <div class="container">
+
+      </div>
+      
+
+
+
+<br>
+      <div class="Welcome-Card rounded container">
+<div class="row">
+<div class="col ta-center">
+  <br>
+        <h2>Constellation Calculator</h2>
+        <hr>
+    <p class="text-muted">Version: 1 "Flubbering Reindeer"</p>
+<p>See what Constellation Home can do for you!</p>
+</div>
+</div>
+<br>
+<h3>How to use:</h3>
+<ol>
+    <li>
+      Instert your KwH usage from the last month        
+    </li>
+    <li>
+            Insert Supply Price Per KwH 
+    </li>
+    <li>
+        Enter your Total Delivery Charges.
+    </li>
+    <li>
+            Then slap that <em>green</em> button and see the results!!
+    </li>
+</ol>
+
+<div class=" card-container">
+<div class="row">
+
+
+
+
+    <div class="col">
+            <input type="number" name="Num-Of-Kwh-Used" id="USAGE"> <br>
+            <p class="text-muted">Kilowatts Used</p>
+    </div>
+
+    <div class="col">
+        <input type="number" name="Entered-Rate" id="RATE"> <br>     <p class="text-muted">Rate (E.g. 15.0&cent; = 0.15)</p>
+        
+    </div>
+
+
+
+
+
+</div>
+<div class="row">
+
+  <div class="col">
+    <select class="form-control" id="Utility">
+      <option>Centerpoint</option>
+      <option>Texas New Mexico Power</option>
+    </select>
+    <p class="text-muted">Select Your Utility</p>
+</div>
+</div>
+</div>
+<br>
+<hr>
+<div class="row Buttons"> 
+        
+<div class="col Ele-center"><button type="button" class="btn btn-danger Clear-Entries" onclick="cleardata()">Clear Entries</button></div>
+<div><p></p></div>
+<div class="col Ele-center"><button type="button" class="btn btn-success Calculate-MPR" onclick="calc()" >Crunch The numbers!</button></div>
+<br>
+<br>
+</div>
+      </div>
+          <br>
+          <div id="Alerts" class="container"></div>
+
+</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script language="JavaScript" type="text/javascript" src="Jquery-331-slim.min.js"  ></script>
+    <script language="JavaScript" type="text/javascript" src="popper-143.min.js"  ></script>
+    <script language="JavaScript" type="text/javascript" src="bootstrap-412.min.js" ></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+      var images = ['away-3101302_1920.jpg','background-3394066_1920.jpg', 'forest-2942477_1920.jpg', 'hall-1929422_1920.jpg', 'lamp-3489395_1920.jpg', 'light-bulb-3535435_1920.jpg', 'ocean-3605547_1920.jpg', 'old-farmhouse-2535919_1280.jpg', 'rustic-3441673_1920.jpg', 'skin.jpg', 'thames-541456_1920.jpg', 'thunderstorm-3440450_1920.jpg', 'thunderstorm-3625405_1920.jpg', 'toronto-3112508_1920.jpg', 'vessel-575010_1920.jpg',];
+      $('#background').css({'background-image': 'url(Images/' + images[Math.floor(Math.random() * images.length)] + ')' });
+      $('#background').addClass("background-2");
+
+    });
+    // Set the example data.
+    $(document).ready(function(){
+    document.getElementById("RATE").value = "0.094";
+    document.getElementById("USAGE").value = "1250";
+
+  });
+// Function for clearing data
+function cleardata(){
+  document.getElementById("RATE").value = "0.159";
+    document.getElementById("USAGE").value = "850";
+     document.getElementById("Alerts").remove;
+}
+// Function for calculating data
+function calc(){
+//Variables + Math
+var RATE = document.getElementById("RATE").value;
+var USAGE = document.getElementById("USAGE").value;
+var Alert = document.getElementById("Alerts");
+var UtilitySelection = document.getElementById("Utility").value;
+
+const minbillcred = 35;
+const maxbillcred = 50;
+// TNMP Pricing
+var TnmpCost = 0.048321;
+var TnmpMonthlyCharge = 7.85;
+// Centerpoint Pricing
+var CNPCost = 0.039893;
+var CNPMonthlyCharge = 5.47;
+//
+
+if (UtilitySelection == "Centerpoint"){
+  console.log("CNP")
+  var TDUPRICE = CNPCost;
+  var MonthlyCharge = CNPMonthlyCharge;
+  console.log(MonthlyCharge)
+}
+else if (UtilitySelection == "Texas New Mexico Power") {
+ console.log("TNMP")
+ var TDUPRICE = TnmpCost;
+  var MonthlyCharge = TnmpMonthlyCharge;
+  console.log(MonthlyCharge)
+}
+else {
+  return
+}
+
+var AllInRate = (+RATE + +TDUPRICE)
+var AllInRateRounded = Math.round( AllInRate * 100000 ) / 100000;
+console.log (AllInRateRounded)
+console.log (USAGE)
+
+var TotalPrice = (USAGE * AllInRateRounded);
+var MPRS = USAGE;
+
+if (USAGE >= 2000){
+console.log ("Qualify for max bill credit")
+var ExpectedTotal = (TotalPrice - maxbillcred +MonthlyCharge)
+var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
+console.log(ExpectedTotalRounded)
+}
+else if (USAGE >= 1000) {
+  console.log ("Qualify for min bill credit")
+  var ExpectedTotal = (TotalPrice - minbillcred +MonthlyCharge)
+var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
+console.log(ExpectedTotalRounded)
+}
+else {
+  console.log ("Qualify for no bill credit")
+  var ExpectedTotal = (TotalPrice +MonthlyCharge)
+var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
+}
+console.log (ExpectedTotalRounded)
+if (USAGE <= 1000) {
+Alert.innerHTML = `<div class="alert alert-danger alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Oh no!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Sadly because your usage is underneath our minimum for bill credits you dont qualify for them. Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p> </div>`;
+   document.getElementById('TotalUsage').innerHTML = USAGE;
+   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
+   
+}
+ else if (USAGE <= 1001) {
+    Alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Awesome Sauce!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our minimum for bill credits you qualify for <b> 35$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p></div> `;
+    document.getElementById('TotalUsage').innerHTML = USAGE;
+   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
+}
+else if ( USAGE <= 1500) {
+    Alert.innerHTML = `<div class="alert alert-primary alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Neato!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is high enough for our bill credits to kick in and take <b> 35$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
+    document.getElementById('TotalUsage').innerHTML = USAGE;
+   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
+}
+else if (USAGE > 1500) {
+    Alert.innerHTML = `<div class="alert alert-success alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Hunky Dory!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our maximum for bill credits you qualify for <b> 50$ off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
+    document.getElementById('TotalUsage').innerHTML = USAGE;
+   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
+}
+else {
+    return
+    // This runs through all of the varibles and checks which one it should display
+}
+}
+      </script>
+
+  </body>
+  <style>
+    /* Putting the styles here made the Background image work the way I wanted to.*/
+body {background-color: lightgray; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), inherit  no-repeat center center fixed;  background-size: cover;}
+.background-2 {background-color: lightgray; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), inherit   no-repeat center center fixed !important;  background-size: cover !important;}
+.Welcome-Card {background-color: white;box-shadow: 1px 1px 1px black;transition: 0.5s;}
+.Welcome-Card:hover {box-shadow: 5px 5px 15px black;transition: 0.5s;}
+.Float-Right {float: right}
+.Float-Left {float: left;}
+.ta-center {text-align: center}
+.Background-container {background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); height: 100vh;}
+.Buttons {display: flex}
+.Ele-center {text-align: center}
+.card-container {text-align: center;}
+em {color: green;text-decoration: underline;font-weight:bold}
+.Nothidden {display: inline}
+.Hidden {display: none;}
+.alert {transition: 0.75s}
+#Alerts {transition: 0.5s;}
+
+  </style>
+
+</html>
