@@ -64,16 +64,9 @@
 
     <div class="col">
         <input type="number" name="Entered-Rate" id="RATE"> <br>     <p class="text-muted">Rate (E.g. 15.0&cent; = 0.15)</p>
-        
     </div>
-
-
-
-
-
 </div>
 <div class="row">
-
   <div class="col">
     <select class="form-control" id="Utility">
       <option>Centerpoint</option>
@@ -86,7 +79,6 @@
 <br>
 <hr>
 <div class="row Buttons"> 
-        
 <div class="col Ele-center"><button type="button" class="btn btn-danger Clear-Entries" onclick="cleardata()">Clear Entries</button></div>
 <div><p></p></div>
 <div class="col Ele-center"><button type="button" class="btn btn-success Calculate-MPR" onclick="calc()" >Crunch The numbers!</button></div>
@@ -96,7 +88,6 @@
       </div>
           <br>
           <div id="Alerts" class="container"></div>
-
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -130,7 +121,7 @@ var RATE = document.getElementById("RATE").value;
 var USAGE = document.getElementById("USAGE").value;
 var Alert = document.getElementById("Alerts");
 var UtilitySelection = document.getElementById("Utility").value;
-
+// Bill Credits
 const minbillcred = 35;
 const maxbillcred = 50;
 // TNMP Pricing
@@ -139,73 +130,57 @@ var TnmpMonthlyCharge = 7.85;
 // Centerpoint Pricing
 var CNPCost = 0.039893;
 var CNPMonthlyCharge = 5.47;
-//
-
+// Utility Check & Enforce Price
 if (UtilitySelection == "Centerpoint"){
-  console.log("CNP")
-  var TDUPRICE = CNPCost;
-  var MonthlyCharge = CNPMonthlyCharge;
-  console.log(MonthlyCharge)
+var TDUPRICE = CNPCost;
+var MonthlyCharge = CNPMonthlyCharge;
 }
 else if (UtilitySelection == "Texas New Mexico Power") {
- console.log("TNMP")
- var TDUPRICE = TnmpCost;
-  var MonthlyCharge = TnmpMonthlyCharge;
-  console.log(MonthlyCharge)
+var TDUPRICE = TnmpCost;
+var MonthlyCharge = TnmpMonthlyCharge;
 }
 else {
   return
 }
-
 var AllInRate = (+RATE + +TDUPRICE)
-var AllInRateRounded = Math.round( AllInRate * 100000 ) / 100000;
-console.log (AllInRateRounded)
-console.log (USAGE)
-
-var TotalPrice = (USAGE * AllInRateRounded);
-var MPRS = USAGE;
-
+var TotalPrice = (USAGE * AllInRate);
 if (USAGE >= 2000){
-console.log ("Qualify for max bill credit")
 var ExpectedTotal = (TotalPrice - maxbillcred +MonthlyCharge)
 var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
-console.log(ExpectedTotalRounded)
+var FinalRate =  Math.round((ExpectedTotalRounded/USAGE)* 10000 ) / 10000;
 }
 else if (USAGE >= 1000) {
-  console.log ("Qualify for min bill credit")
-  var ExpectedTotal = (TotalPrice - minbillcred +MonthlyCharge)
+var ExpectedTotal = (TotalPrice - minbillcred +MonthlyCharge)
 var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
-console.log(ExpectedTotalRounded)
+var FinalRate =  Math.round((ExpectedTotalRounded/USAGE)* 10000 ) / 10000;
 }
 else {
-  console.log ("Qualify for no bill credit")
-  var ExpectedTotal = (TotalPrice +MonthlyCharge)
+var ExpectedTotal = (TotalPrice +MonthlyCharge)
 var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
+var FinalRate =  Math.round((ExpectedTotalRounded/USAGE)* 10000 ) / 10000;
 }
-console.log (ExpectedTotalRounded)
-if (USAGE <= 1000) {
+if (USAGE <= 999) {
 Alert.innerHTML = `<div class="alert alert-danger alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Oh no!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Sadly because your usage is underneath our minimum for bill credits you dont qualify for them. Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p> </div>`;
    document.getElementById('TotalUsage').innerHTML = USAGE;
-   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('AllinRateSuccess').innerHTML = FinalRate;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
-   
 }
- else if (USAGE <= 1001) {
-    Alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Awesome Sauce!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our minimum for bill credits you qualify for <b> $35 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p></div> `;
+ else if (USAGE <= 1000) {
+    Alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Awesome Sauce!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough, our minimum for bill credits you qualify for is: <b> $35 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p></div> `;
     document.getElementById('TotalUsage').innerHTML = USAGE;
-   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('AllinRateSuccess').innerHTML = FinalRate;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
 }
 else if ( USAGE <= 1500) {
     Alert.innerHTML = `<div class="alert alert-primary alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Neato!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is high enough for our bill credits to kick in and take <b> $35 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
     document.getElementById('TotalUsage').innerHTML = USAGE;
-   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('AllinRateSuccess').innerHTML = FinalRate;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
 }
 else if (USAGE > 1500) {
-    Alert.innerHTML = `<div class="alert alert-success alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Hunky Dory!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough our maximum for bill credits you qualify for <b> $50 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
+    Alert.innerHTML = `<div class="alert alert-success alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Hunky Dory!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. So because your usage is high enough, our maximum for bill credits you qualify for is: <b> $50 off of you bill!</b> Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p>  </div>`;
     document.getElementById('TotalUsage').innerHTML = USAGE;
-   document.getElementById('AllinRateSuccess').innerHTML = AllInRateRounded;
+   document.getElementById('AllinRateSuccess').innerHTML = FinalRate;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
 }
 else {
@@ -214,7 +189,6 @@ else {
 }
 }
       </script>
-
   </body>
   <style>
     /* Putting the styles here made the Background image work the way I wanted to.*/
@@ -234,7 +208,6 @@ em {color: green;text-decoration: underline;font-weight:bold}
 .Hidden {display: none;}
 .alert {transition: 0.75s}
 #Alerts {transition: 0.5s;}
-
   </style>
 
 </html>
