@@ -151,7 +151,7 @@ var ExpectedTotalRounded = Math.ceil(ExpectedTotal * 100) / 100;
 var FinalRate =  Math.round((ExpectedTotalRounded/USAGE)* 10000 ) / 10000;
 }
 if (USAGE <= 999) {
-Alert.innerHTML = `<div class="alert alert-danger alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Slick!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is underneath our minimum for bill credits you dont qualify for them (for the data you entered). Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p> </div>`;
+Alert.innerHTML = `<div class="alert alert-danger alert-dismissible fade show " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><p> <strong>Alrighty!</strong> Your Usage is: <b id="TotalUsage">0</b> KwH. Your All in(clusive) rate is: <b id="AllinRateSuccess">0</b>&cent;/KwH. Your usage is underneath our minimum for bill credits you dont qualify for them (for the data you entered). Your expected bill would be around <b>$</b><b id="billprice">0</b>.</p> </div>`;
    document.getElementById('TotalUsage').innerHTML = USAGE;
    document.getElementById('AllinRateSuccess').innerHTML = FinalRate;
    document.getElementById('billprice').innerHTML = ExpectedTotalRounded;
