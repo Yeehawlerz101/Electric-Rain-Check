@@ -116,11 +116,11 @@ var UtilitySelection = document.getElementById("Utility").value;
 const minbillcred = 35;
 const maxbillcred = 50;
 // TNMP Pricing
-var TnmpCost = 0.048321;
-var TnmpMonthlyCharge = 7.85;
+var TnmpCost = 0.048321; // Per Kwh
+var TnmpMonthlyCharge = 7.85; // Monthly Service Charge
 // Centerpoint Pricing
-var CNPCost = 0.039893;
-var CNPMonthlyCharge = 5.47;
+var CNPCost = 0.040512; // Per Kwh
+var CNPMonthlyCharge = 5.47; // Monthly Service Charge
 // Utility Check & Enforce Price
 if (UtilitySelection == "Centerpoint"){
 var TDUPRICE = CNPCost;
